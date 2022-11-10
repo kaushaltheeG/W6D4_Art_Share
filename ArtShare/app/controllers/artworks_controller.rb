@@ -1,7 +1,8 @@
 class ArtworksController < ApplicationController
 
         def index 
-            artworks = Artwork.all 
+            artworks = Artwork.artworks_for_artist_id(params[:user_id])
+            # artwork = Artwork.all
             render json: artworks
         end 
 
@@ -36,15 +37,10 @@ class ArtworksController < ApplicationController
         end
 
         def destroy
-            
             artwork = Artwork.find(params[:id])
-         
             artwork.destroy
             render json: artwork
-        
         end
-
-
 
         private
 

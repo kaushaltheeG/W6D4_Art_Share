@@ -27,6 +27,13 @@ class Artwork < ApplicationRecord
         through: :artwork_sharing,
         source: :viewer
         
+    def self.artworks_for_artist_id(artist_id)
+        #retrives all the artworks and shared artworks for a given a user 
+        Artwork
+            .select('*') 
+            .left_outer_joins(:shared_viewers)
+            .where('artworks.artist_id = (?)', artist_id)
+    end 
 
 
 end
