@@ -25,5 +25,18 @@ class User < ApplicationRecord
     has_many :shared_artworks,
         through: :viewed_artworks,
         source: :artwork_sharing
+
+    has_many :comments,
+        foreign_key: :author_id,
+        class_name: :Comment,
+        dependent: :destroy,
+        inverse_of: :author
       
+
+    def self.search(username)
+        return nil if username.nil?
+        # filter = username.split("").join("%")
+        User.select(:id).where("username LIKE (?)", "%#{username}%")
+    end
+        
 end

@@ -27,11 +27,17 @@ class Artwork < ApplicationRecord
     has_many :shared_viewers,
         through: :artwork_sharing,
         source: :viewer
+
+    has_many :critiques,
+        foreign_key: :artwork_id,
+        class_name: :Comment,
+        dependent: :destroy,
+        inverse_of: :artwork
         
     def self.artworks_for_artist_id(artist_id)
         #retrives all the artworks and shared artworks for a given a user 
         Artwork
-            .select('*') 
+            .select('title') 
             .left_outer_joins(:shared_viewers)
             .where('artworks.artist_id = (?)', artist_id)
     end 

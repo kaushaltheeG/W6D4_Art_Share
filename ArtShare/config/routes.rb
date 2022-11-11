@@ -6,10 +6,13 @@ Rails.application.routes.draw do
   
   resources :users do 
     resources :artworks, only: [:index]
+    resources :comments, only: [:index]
+  
   end 
   
   resources :artworks, except: [:index]
-  resources :artwork_shares, only: [:create, :destory]
+  resources :artwork_shares, only: [:create, :destroy]
+  resources :comments, only: [:create, :destroy]
 
 
 end
